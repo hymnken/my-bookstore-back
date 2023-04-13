@@ -14,9 +14,8 @@ class BaseDaoDefine {
       host,
       port,
       dialect, // 表示是何种数据库
-      define: { timestamps: false, freezeTableName: true },
+      define: { timestamps: true, freezeTableName: true },
     })
   }
 }
-
 export const {sequelize} = BaseDaoDefine.baseDaoOrm
