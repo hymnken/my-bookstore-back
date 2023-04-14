@@ -1,4 +1,4 @@
-import { Op } from 'sequelize'
+import { Op, Sequelize } from 'sequelize'
 import { model } from '../definemodel'
 
 class UserDaoDefine {
@@ -52,13 +52,23 @@ class UserDaoDefine {
       }
     })
   }
+  static countUserinfo() {
+    return model.findAll({
+      raw: true,
+      group: 'address',
+      attributes:['address',[Sequelize.fn('count',Sequelize.col('valid')),'totalcount']],
+      where: {
+        valid:1
+      }
+    })
+  }
 }
 
 
 
 
 export const { addUser, findAllUser, findByprops,
-  findByUsmAndPsw, findByLike, findByUsmAndAddr } = UserDaoDefine
+  findByUsmAndPsw, findByLike, findByUsmAndAddr, countUserinfo } = UserDaoDefine
 
 
 export type Userinfo = {

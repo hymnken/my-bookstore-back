@@ -1,7 +1,16 @@
 import { Context } from 'koa'
 import Router from 'koa-router'
 import { success } from '../common/ResResult'
-import { Userinfo, addUser, findAllUser, findByprops, findByUsmAndPsw, findByLike, findByUsmAndAddr } from '../dao/UserDaoDefine'
+import {
+  Userinfo,
+  addUser,
+  findAllUser,
+  findByprops,
+  findByUsmAndPsw,
+  findByLike,
+  findByUsmAndAddr,
+  countUserinfo,
+} from '../dao/UserDaoDefine'
 const router = new Router()
 
 router.prefix('/usermodule')
@@ -40,8 +49,10 @@ router.get('/findByUsmAndAddr', async (ctx: Context) => {
   ctx.body = success(await findByUsmAndAddr())
 })
 
-
-
+// countUserinfo
+router.get('/countUserinfo', async (ctx: Context) => {
+  ctx.body = success(await countUserinfo())
+})
 router.post('/addUser', async (ctx) => {
   const userinfo: Userinfo = ctx.request.body
   const dbUserinfo = await addUser(userinfo)
