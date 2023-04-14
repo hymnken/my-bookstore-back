@@ -23,6 +23,8 @@ router.get('/findByProps', async (ctx: Context) => {
 router.get('/findOneUser/:username/:password', async (ctx: Context) => {
   const {username,password} = ctx.params
   ctx.body = success(await findByUsmAndPsw(username, password))
+  console.log();
+  
 })
 
 router.post('/addUser', async (ctx) => {
