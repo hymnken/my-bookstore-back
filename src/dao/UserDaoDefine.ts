@@ -26,20 +26,41 @@ class UserDaoDefine {
       },
     })
   }
-  static findByLike() {
+  static findByLike(key: string) {
+    const searchKey = `%${key}%`
     return model.findAll({
       raw: true,
       where: {
         username: {
-          [Op.like]:'王%'
-        }
+          [Op.like]: searchKey,
+        },
+      },
+    })
+  }
+  static findByUsmAndAddr() {
+    return model.findAll({
+      raw: true,
+      where: {
+        [Op.or]: [
+          {
+            username:{[Op.like]:'王%'}
+          },
+          {
+            address: { [Op.like]: '%s%' }
+          }
+        ]
       }
     })
   }
 }
 
 
-export const { addUser, findAllUser, findByprops ,findByUsmAndPsw} = UserDaoDefine
+
+
+export const { addUser, findAllUser, findByprops,
+  findByUsmAndPsw, findByLike, findByUsmAndAddr } = UserDaoDefine
+
+
 export type Userinfo = {
   userid: number
   username: string
