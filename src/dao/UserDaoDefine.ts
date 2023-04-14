@@ -26,7 +26,19 @@ class UserDaoDefine {
       },
     })
   }
+  static findByLike() {
+    return model.findAll({
+      raw: true,
+      where: {
+        username: {
+          [Op.like]:'王%'
+        }
+      }
+    })
+  }
 }
+
+
 export const { addUser, findAllUser, findByprops ,findByUsmAndPsw} = UserDaoDefine
 export type Userinfo = {
   userid: number
