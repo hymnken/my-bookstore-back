@@ -29,6 +29,8 @@ router.post('/addUser', async (ctx) => {
   const userinfo: Userinfo = ctx.request.body
   const dbUserinfo = await addUser(userinfo)
   ctx.body = success(dbUserinfo)
+  console.log('dbUserinfo');
+  
 })
 
 module.exports = router
