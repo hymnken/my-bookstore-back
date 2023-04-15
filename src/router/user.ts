@@ -43,7 +43,7 @@ router.get('/findOneUser/:username/:password', async (ctx: Context) => {
   ctx.body = success(await findByUsmAndPsw(username, password))
 })
 
-//findByUsmAndAddr
+//findByUsmAndAddress
 
 router.get('/findByUsmAndAddr', async (ctx: Context) => {
   ctx.body = success(await findByUsmAndAddr())
