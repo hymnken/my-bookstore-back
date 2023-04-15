@@ -12,6 +12,7 @@ import {
   countUserinfo,
   findUserWithPager,
 } from '../dao/UserDaoDefine'
+import UserDaoOrm from '../dao/UserDaoOrm'
 const router = new Router()
 
 router.prefix('/usermodule')
@@ -26,7 +27,7 @@ router.get('/findAllUser', async (ctx: Context) => {
   ctx.body = success(dbUserinfo)
 })
 
-router.get('/findByProps', async (ctx: Context) => { 
+router.get('/findByProps', async (ctx: Context) => {
   ctx.body = success(await findByprops())
 })
 
@@ -35,12 +36,12 @@ router.get('/findByProps', async (ctx: Context) => {
 // })
 
 router.get('/findByLike/:key', async (ctx: Context) => {
-  const {key} = ctx.params
+  const { key } = ctx.params
   ctx.body = success(await findByLike(key))
 })
 
 router.get('/findOneUser/:username/:password', async (ctx: Context) => {
-  const {username,password} = ctx.params
+  const { username, password } = ctx.params
   ctx.body = success(await findByUsmAndPsw(username, password))
 })
 
@@ -61,11 +62,18 @@ router.get('/findUserWithPager/:pageNum/:pageSize', async (ctx: Context) => {
   ctx.body = success(await findUserWithPager(offset, parseInt(pageSize)))
 })
 
+// Orm 使用
+
+router.get('/findByLikeOrm/:key', async (ctx: Context) => {
+  const { key } = ctx.params
+  ctx.body = success(await UserDaoOrm.findByLikeOrm(key))
+})
+
 router.post('/addUser', async (ctx) => {
   const userinfo: Userinfo = ctx.request.body
   const dbUserinfo = await addUser(userinfo)
   ctx.body = success(dbUserinfo)
-  console.log('dbUserinfo');
+  console.log('dbUserinfo')
 })
 
 module.exports = router
