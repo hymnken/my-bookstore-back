@@ -43,33 +43,47 @@ class UserDaoDefine {
       where: {
         [Op.or]: [
           {
-            username:{[Op.like]:'王%'}
+            username: { [Op.like]: '王%' },
           },
           {
-            address: { [Op.like]: '%s%' }
-          }
-        ]
-      }
+            address: { [Op.like]: '%s%' },
+          },
+        ],
+      },
     })
   }
+  // 聚合查询
   static countUserinfo() {
     return model.findAll({
       raw: true,
       group: 'address',
-      attributes:['address',[Sequelize.fn('count',Sequelize.col('valid')),'totalcount']],
+      attributes: ['address', [Sequelize.fn('count', Sequelize.col('valid')), 'totalcount']],
       where: {
-        valid:1
-      }
+        valid: 1,
+      },
+    })
+  }
+
+  // 分页查询
+  static findUserWithPager(offset:number,pageSize:number) {
+    return model.findAll({
+      raw: true,
+      limit: pageSize,
+      offset,
     })
   }
 }
 
-
-
-
-export const { addUser, findAllUser, findByprops,
-  findByUsmAndPsw, findByLike, findByUsmAndAddr, countUserinfo } = UserDaoDefine
-
+export const {
+  addUser,
+  findAllUser,
+  findByprops,
+  findByUsmAndPsw,
+  findByLike,
+  findByUsmAndAddr,
+  countUserinfo,
+  findUserWithPager,
+} = UserDaoDefine
 
 export type Userinfo = {
   userid: number

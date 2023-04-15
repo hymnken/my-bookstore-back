@@ -10,6 +10,7 @@ import {
   findByLike,
   findByUsmAndAddr,
   countUserinfo,
+  findUserWithPager,
 } from '../dao/UserDaoDefine'
 const router = new Router()
 
@@ -53,6 +54,13 @@ router.get('/findByUsmAndAddr', async (ctx: Context) => {
 router.get('/countUserinfo', async (ctx: Context) => {
   ctx.body = success(await countUserinfo())
 })
+// findUserWithPager 分页查询
+router.get('/findUserWithPager/:pageNum/:pageSize', async (ctx: Context) => {
+  const { pageNum, pageSize } = ctx.params
+  const offset = (pageNum - 1) * pageSize
+  ctx.body = success(await findUserWithPager(offset, parseInt(pageSize)))
+})
+
 router.post('/addUser', async (ctx) => {
   const userinfo: Userinfo = ctx.request.body
   const dbUserinfo = await addUser(userinfo)
