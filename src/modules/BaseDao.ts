@@ -2,8 +2,8 @@ import dbConConf from '../config/dbconfig'
 import path from 'path'
 import { Dialect } from 'sequelize'
 import { Sequelize } from 'sequelize-typescript'
-class BaseDaoDefine {
-  static baseDaoOrm: BaseDaoDefine = new BaseDaoDefine()
+class BaseDao {
+  static baseDao: BaseDao = new BaseDao()
   sequelize!: Sequelize
   constructor() {
     this.initSeqConf('mysql')
@@ -17,11 +17,14 @@ class BaseDaoDefine {
       dialect, // 表示是何种数据库
       define: { timestamps: true, freezeTableName: true },
     })
-      this.addModels()
-    }
-    addModels() {
-        const modelPath = path.join(process.cwd(), '/src/ormmodel')
-        this.sequelize.addModels([modelPath])
-    }
+  }
+
+  addModels() {
+    const modelPath = path.join(process.cwd(), '/src/modules/decormodel')
+    this.sequelize.addModels([modelPath])
+  }
 }
-export const { sequelize } = BaseDaoDefine.baseDaoOrm
+
+const baseDao = BaseDao.baseDao
+baseDao.addModels()
+export const { sequelize } = baseDao

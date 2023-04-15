@@ -11,10 +11,9 @@ import {
   findByUsmAndAddr,
   countUserinfo,
   findUserWithPager,
-} from '../dao/UserDaoDefine'
-import UserDaoOrm from '../dao/UserDaoOrm'
-const router = new Router()
+} from '../modules/userinfo/dao/UserDao'
 
+const router = new Router()
 router.prefix('/usermodule')
 
 router.get('/findUserinfo/:username/:password', async (ctx: Context) => {
@@ -64,10 +63,10 @@ router.get('/findUserWithPager/:pageNum/:pageSize', async (ctx: Context) => {
 
 // Orm 使用
 
-router.get('/findByLikeOrm/:key', async (ctx: Context) => {
-  const { key } = ctx.params
-  ctx.body = success(await UserDaoOrm.findByLikeOrm(key))
-})
+// router.get('/findByLikeOrm/:key', async (ctx: Context) => {
+//   const { key } = ctx.params
+//   ctx.body = success(await UserDaoOrm.findByLikeOrm(key))
+// })
 
 router.post('/addUser', async (ctx) => {
   const userinfo: Userinfo = ctx.request.body
