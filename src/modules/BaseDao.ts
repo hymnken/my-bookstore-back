@@ -2,6 +2,7 @@ import dbConConf from '../config/dbconfig'
 import path from 'path'
 import { Dialect } from 'sequelize'
 import { Sequelize } from 'sequelize-typescript'
+//
 class BaseDao {
   static baseDao: BaseDao = new BaseDao()
   sequelize!: Sequelize
